@@ -1,0 +1,25 @@
+<body>
+
+    <div class="page-header text-center">
+        <h1>D3期末專題-成果發表</h1>
+        <p></p>
+    </div>
+   
+
+    <!-- PULL IN THE POLL CREATION FORM -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {{ >pollForm }}
+            </div>
+        </div>
+    </div>
+    <hr>
+    <!-- LOOP OVER POLLS AND SHOW EACH -->
+    <div class="polls">
+        {{ #each polls }}
+            {{ >poll }}
+        {{ /each }}
+    </div>
+    
+</body>
