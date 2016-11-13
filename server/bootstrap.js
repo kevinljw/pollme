@@ -49,7 +49,7 @@ if (Meteor.isServer) {
       // the IP address of the caller
       ip = this.connection.clientAddress;
 
-      if(ip.indexOf("140.112")){
+      if(ip.indexOf("140.112")>-1){
 
         // check by ip and date (these should be indexed)
         if (Polls.findOne({_id: pollID, ip: {$elemMatch:{$eq:userId}}})) {
