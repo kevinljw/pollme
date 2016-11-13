@@ -38,7 +38,8 @@ Template.poll.helpers({
     return thisNow === true;
   },
   hasVoted:function (thisPollId) {
-    console.log(thisPollId, Session.get('anonId'));
+    if ( !Session.get('anonId') ) Session.setPersistent('anonId',Random.id());
+    
     if(Polls.findOne({_id: thisPollId, ip: Session.get('anonId')})){
       return true;
     }
