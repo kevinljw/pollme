@@ -1,3 +1,4 @@
+
 // attach events to our poll template
 Template.poll.events({
 
@@ -8,8 +9,9 @@ Template.poll.events({
     event.preventDefault();
     var pollID = $(event.currentTarget).parent('.poll').data('id');
     var voteID = $(event.currentTarget).data('id');
+    if ( !Session.get('anonId') ) Session.setPersistent('anonId',Random.id());
     // console.log(voteID);
-    Meteor.call('givePoints', pollID, voteID, function(err) {
+    Meteor.call('givePoints', pollID, voteID, Session.get('anonId'), function(err) {
         if (err)
           alert(err.reason);
     });
@@ -34,5 +36,14 @@ Template.poll.events({
 Template.poll.helpers({
   isNow: function (thisNow) {
     return thisNow === true;
+  },
+  hasVoted:function (thisPollId) {
+    console.log(thisPollId, Session.get('anonId'));
+    if(Polls.findOne({_id: thisPollId, ip: Session.get('anonId')})){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 });

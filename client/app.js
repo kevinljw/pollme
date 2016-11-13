@@ -15,4 +15,3 @@ UI.registerHelper('indexedArray', function(context, options) {
   }
 });
 
-Session.set("selected_player", this._id);

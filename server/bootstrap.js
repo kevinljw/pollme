@@ -37,7 +37,7 @@ if (Meteor.isServer) {
     showOrder: function() {
       
     },
-    givePoints: function(pollID, voteID) {
+    givePoints: function(pollID, voteID, userId) {
    
       var voteString = 'choices.' + voteID + '.votes';
       var scoreString = 'score';
@@ -49,24 +49,30 @@ if (Meteor.isServer) {
       // the IP address of the caller
       ip = this.connection.clientAddress;
 
-      // check by ip and date (these should be indexed)
-      if (Polls.findOne({_id: pollID, ip: {$elemMatch:{$eq:ip}}})) {
-        throw new Meteor.Error(403, '你已經投過這組票囉!');
-      } else {
-        // the player has not voted yet
-        // Polls.update(playerId, {$inc: {score: 5}});
+      if(ip.indexOf("140.112")){
+
+        // check by ip and date (these should be indexed)
+        if (Polls.findOne({_id: pollID, ip: {$elemMatch:{$eq:userId}}})) {
+          throw new Meteor.Error(403, '你已經投過這組票囉!');
+        } else {
+          // the player has not voted yet
+          // Polls.update(playerId, {$inc: {score: 5}});
+        
+          // make sure she cannot vote again today
+          Polls.update({_id: pollID},{ $push: { ip: userId } , $inc: action});
+          // var voteString = 'choices.' + voteID + '.votes';
+      // var action = {};
+      // action[voteString] = 1;
       
-        // make sure she cannot vote again today
-        Polls.update({_id: pollID},{ $push: { ip: ip } , $inc: action});
-        // var voteString = 'choices.' + voteID + '.votes';
-    // var action = {};
-    // action[voteString] = 1;
-    
-    // // increment the number of votes for this choice
-    // Polls.update(
-    //   { _id: pollID }, 
-    //   { $inc: action }
-    // );
+      // // increment the number of votes for this choice
+      // Polls.update(
+      //   { _id: pollID }, 
+      //   { $inc: action }
+      // );
+        }
+      }
+      else{
+        throw new Meteor.Error(403, '只能在教室裡投票喔！');
       }
     }
   });

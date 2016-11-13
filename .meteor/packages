@@ -8,3 +8,4 @@ meteor-platform
 autopublish
 insecure
 twbs:bootstrap
+u2622:persistent-session
