@@ -59,7 +59,8 @@ if (Meteor.isServer) {
           // Polls.update(playerId, {$inc: {score: 5}});
         
           // make sure she cannot vote again today
-          Polls.update({_id: pollID},{ $push: { ip: userId } , $inc: action});
+          // Polls.update({_id: pollID},{ $push: { ip: userId } , $inc: action});
+          
           // var voteString = 'choices.' + voteID + '.votes';
       // var action = {};
       // action[voteString] = 1;
